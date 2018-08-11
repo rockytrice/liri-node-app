@@ -8,10 +8,10 @@ var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 // requiring the keys file
 var keys = require('./keys.js');
+console.log(keys);
 
-
-
-
+var argOne = process.argv[2];
+var argTwo = process.argv[3];
 
 
 
@@ -22,10 +22,18 @@ var pick = (caseData, functionData) => {
             myTweets(functionData);
             break;
     }
+    switch(caseData){
+        case "spotify-this-song":
+        mySpotify(functionData);
+        break;
+    }
 
 }
+var runThis = (argOne, argTwo) => {
+    pick(argOne, argTwo);
 
 
+}
 // ES6 way of writing function to get the tweet data
 var myTweets = () => {
     var client = new Twitter(keys.twitter);
@@ -39,6 +47,7 @@ var myTweets = () => {
                 console.log(tweets[i].created_at);
                 console.log('');
                 console.log(tweets[i].text);
+                console.log(response);
             }
         }
     });
@@ -58,4 +67,4 @@ spotify.search({
             }
         })
     
-        
+        runThis();
