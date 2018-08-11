@@ -8,13 +8,18 @@ var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 // requiring the keys file
 var keys = require('./keys.js');
-console.log(keys);
+// intitalizing the spotify API using client id and secret key
+var spotify = new Spotify(keys.spotify);
 
 var argOne = process.argv[2];
 var argTwo = process.argv[3];
 
 
-
+//  Functions 
+// =======================================================================================
+var runThis = (argOne, argTwo) => {
+    pick(argOne, argTwo);
+}
 //function/ switch-case statement to direct which command gets run
 var pick = (caseData, functionData) => {
     switch (caseData) {
@@ -22,56 +27,64 @@ var pick = (caseData, functionData) => {
             myTweets(functionData);
             break;
     }
-    // switch(caseData){
-    //     case "spotify-this-song":
-    //     mySpotify(functionData);
-    //     break;
-    // }
+    switch (caseData) {
+        case "spotify-this-song":
+            mySpotify(functionData);
+            break;
+    }
 
 }
-var runThis = (argOne, argTwo) => {
-    pick(argOne, argTwo);
 
-
-}
 // ES6 way of writing function to get the tweet data
 var myTweets = () => {
     var client = new Twitter(keys.twitter);
 
     var params = {
-        screen_name: 'trice_rocky'
+        screen_name: 'trice_rocky',
+        count: 20
     };
-    client.get('statuses/user_timeline', params, function (error, tweets, response) {
+    client.get('statuses/user_timeline', params, (error, tweets, response) => {
         if (!error) {
             for (var i = 0; i < tweets.length; i++) {
                 console.log(tweets[i].created_at);
                 console.log('');
                 console.log(tweets[i].text);
-                console.log(response);
             }
         }
     });
 }
 // function for the spotify search
-// var mySpotify = () => {
-//     if (songName === undefined) {
-//         songName === "The Sign";
-//     }
-// }
-// spotify.search({
-//             type: 'track',
-//             query: songName
-//         }, function (err, data) {
-//             if (err) {
-//                 return console.log('Error occurred: ' + err);
-//             }
-//         })
+var mySpotify = (songName) => {
+    if (songName === undefined) {
+        songName = "The Sign";
+
+
+    }
+    spotify.search({
+        type: 'track',
+        query: songName
+    }, (err, data) => {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        var songs = data.tracks.items;
+
+        for (var i = 0; i < songs.length; i++) {
+            console.log(i);
+            console.log("artist: " + songs[i].name);
+        }
+
+
+
+
+    })
+}
 
 
 
 
 
 
-    
-    
-        runThis(argOne,argTwo);
+
+
+runThis(argOne, argTwo);
