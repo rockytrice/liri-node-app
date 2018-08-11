@@ -22,11 +22,11 @@ var pick = (caseData, functionData) => {
             myTweets(functionData);
             break;
     }
-    switch(caseData){
-        case "spotify-this-song":
-        mySpotify(functionData);
-        break;
-    }
+    // switch(caseData){
+    //     case "spotify-this-song":
+    //     mySpotify(functionData);
+    //     break;
+    // }
 
 }
 var runThis = (argOne, argTwo) => {
@@ -53,18 +53,25 @@ var myTweets = () => {
     });
 }
 // function for the spotify search
-var mySpotify = () => {
-    if (songName === undefined) {
-        songName === "The Sign";
-    }
-}
-spotify.search({
-            type: 'track',
-            query: songName
-        }, function (err, data) {
-            if (err) {
-                return console.log('Error occurred: ' + err);
-            }
-        })
+// var mySpotify = () => {
+//     if (songName === undefined) {
+//         songName === "The Sign";
+//     }
+// }
+// spotify.search({
+//             type: 'track',
+//             query: songName
+//         }, function (err, data) {
+//             if (err) {
+//                 return console.log('Error occurred: ' + err);
+//             }
+//         })
+
+
+
+
+
+
     
-        runThis();
+    
+        runThis(argOne,argTwo);
