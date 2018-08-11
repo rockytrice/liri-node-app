@@ -10,15 +10,38 @@ var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
 // intitalizing the spotify API using client id and secret key
 var spotify = new Spotify(keys.spotify);
+// chalk for text color in terminal 
+const chalk = require('chalk');
+
 
 var argOne = process.argv[2];
 var argTwo = process.argv[3];
+var movieName = process.argv[4];
 
+
+// Create an empty variable for holding the movie name
+
+// Loop through all the words in the node argument
+// And do a little for-loop magic to handle the inclusion of "+"s
+// for (var i = 2; i < nodeArgs.length; i++) {
+
+//   if (i > 2 && i < nodeArgs.length) {
+
+//     movieName = movieName + "+" + nodeArgs[i];
+
+//   }
+
+//   else {
+
+//     movieName += nodeArgs[i];
+
+//   }
+// }
 
 //  Functions 
 // =======================================================================================
-var runThis = (argOne, argTwo) => {
-    pick(argOne, argTwo);
+var run= (argOne, argTwo) => {
+    pick(argOne, argTwo, );
 }
 //function/ switch-case statement to direct which command gets run
 var pick = (caseData, functionData) => {
@@ -32,9 +55,17 @@ var pick = (caseData, functionData) => {
             mySpotify(functionData);
             break;
     }
+    switch (caseData){
+        case "movie-this":
+        queryUrl(functionData);
+        break;
+
+
+    }
 
 }
-
+// ===============================================================================================
+// ===============================================================================================
 // ES6 way of writing function to get the tweet data
 var myTweets = () => {
     var client = new Twitter(keys.twitter);
@@ -46,12 +77,16 @@ var myTweets = () => {
     client.get('statuses/user_timeline', params, (error, tweets, response) => {
         if (!error) {
             for (var i = 0; i < tweets.length; i++) {
-                console.log(tweets[i].created_at);
+                console.log(chalk.blue.bold(tweets[i].created_at));
                 console.log('');
                 console.log(tweets[i].text);
             }
         }
     });
+}
+
+var getArtistNames = (artist) => {
+    return artist.name;
 }
 // function for the spotify search
 var mySpotify = (songName) => {
@@ -71,20 +106,27 @@ var mySpotify = (songName) => {
 
         for (var i = 0; i < songs.length; i++) {
             console.log(i);
-            console.log("artist: " + songs[i].name);
+            console.log("artist(s): " + songs[i].artists.map(getArtistNames));
+            console.log("song name: " + songs[i].name);
+            console.log("preview song: " + songs[i].preview_url);
         }
-
-
-
-
     })
 }
 
+var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+
+request(queryUrl,(error, response, body) => {
+
+    // If the request is successful
+    if (!error && response.statusCode === 200) {
+  
+      // Parse the body of the site and recover just the imdbRating
+      console.log("Movie name: " + (body).Title);
+      console.log("Release Year: " + JSON.parse(body).Year);
+      console.log("Ratings: " + JSON.parse(body).imdbRating);
+    //   console.log("Country produced in: " + JSON.parse(body).)
+    }
+  });
 
 
-
-
-
-
-
-runThis(argOne, argTwo);
+run();
