@@ -10,6 +10,7 @@ var Spotify = require('node-spotify-api');
 var keys = require('./keys.js');
 // intitalizing the spotify API using client id and secret key
 var spotify = new Spotify(keys.spotify);
+var fs = require("fs");
 // chalk for text color in terminal 
 const chalk = require('chalk');
 
@@ -41,6 +42,12 @@ var pick = (caseData, functionData) => {
 
             break;
     }
+    switch (caseData) {
+        case "do-what-it-says":
+        liriCommand ();
+        break;
+
+    }
 }
 // ===============================================================================================
 // ===============================================================================================
@@ -65,7 +72,7 @@ var myTweets = () => {
 var getArtistNames = (artist) => {
     return artist.name;
 }
-// function for the spotify search
+// function for the spotify search=======================================================================================================
 var mySpotify = (songName) => {
     if (songName === undefined) {
         songName = "The Sign";
@@ -87,6 +94,7 @@ var mySpotify = (songName) => {
         }
     })
 }
+// movie sear function=====================================================================================================================
 var myMovie = () => {
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&apikey=9379fb14";
 
@@ -96,14 +104,11 @@ var myMovie = () => {
             request("http://www.omdbapi.com/?t=mr+nobody&apikey=9379fb14", (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     console.log(JSON.parse(body), null, 2);
-
                 }
             });
         }
-
         // If the request is successful
         if (!error && response.statusCode === 200) {
-
             // Parse the body of the site and recover the data specified 
             console.log("Movie name: " + JSON.parse(body).Title);
             console.log("Release Year: " + JSON.parse(body).Year);
@@ -119,6 +124,21 @@ var myMovie = () => {
         }
     });
 }
+// LIRI command function=========================================================================================================================
+var liriCommand = () => {
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        var array = data.split(",");
+        var command = array[0];
+        var input = array[1];
+        console.log("your wish is granted: " + command + " " + input);
+        mySpotify (input);
+        
 
+            
+    })
+}
 
 run(argOne, argTwo);
