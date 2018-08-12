@@ -18,29 +18,9 @@ var argOne = process.argv[2];
 var argTwo = process.argv[3];
 var movieName = process.argv[4];
 
-
-// Create an empty variable for holding the movie name
-
-// Loop through all the words in the node argument
-// And do a little for-loop magic to handle the inclusion of "+"s
-// for (var i = 2; i < nodeArgs.length; i++) {
-
-//   if (i > 2 && i < nodeArgs.length) {
-
-//     movieName = movieName + "+" + nodeArgs[i];
-
-//   }
-
-//   else {
-
-//     movieName += nodeArgs[i];
-
-//   }
-// }
-
 //  Functions 
 // =======================================================================================
-var run= (argOne, argTwo) => {
+var run = (argOne, argTwo) => {
     pick(argOne, argTwo, );
 }
 //function/ switch-case statement to direct which command gets run
@@ -55,14 +35,12 @@ var pick = (caseData, functionData) => {
             mySpotify(functionData);
             break;
     }
-    switch (caseData){
+    switch (caseData) {
         case "movie-this":
-        queryUrl(functionData);
-        break;
+            myMovie();
 
-
+            break;
     }
-
 }
 // ===============================================================================================
 // ===============================================================================================
@@ -84,7 +62,6 @@ var myTweets = () => {
         }
     });
 }
-
 var getArtistNames = (artist) => {
     return artist.name;
 }
@@ -92,8 +69,6 @@ var getArtistNames = (artist) => {
 var mySpotify = (songName) => {
     if (songName === undefined) {
         songName = "The Sign";
-
-
     }
     spotify.search({
         type: 'track',
@@ -112,21 +87,38 @@ var mySpotify = (songName) => {
         }
     })
 }
+var myMovie = () => {
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&apikey=9379fb14";
 
-var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    request(queryUrl, (error, response, body) => {
+        // if the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+        if (movieName === undefined) {
+            request("http://www.omdbapi.com/?t=mr+nobody&apikey=9379fb14", (error, response, body) => {
+                if (!error && response.statusCode === 200) {
+                    console.log(JSON.parse(body), null, 2);
 
-request(queryUrl,(error, response, body) => {
+                }
+            });
+        }
 
-    // If the request is successful
-    if (!error && response.statusCode === 200) {
-  
-      // Parse the body of the site and recover just the imdbRating
-      console.log("Movie name: " + (body).Title);
-      console.log("Release Year: " + JSON.parse(body).Year);
-      console.log("Ratings: " + JSON.parse(body).imdbRating);
-    //   console.log("Country produced in: " + JSON.parse(body).)
-    }
-  });
+        // If the request is successful
+        if (!error && response.statusCode === 200) {
+
+            // Parse the body of the site and recover the data specified 
+            console.log("Movie name: " + JSON.parse(body).Title);
+            console.log("Release Year: " + JSON.parse(body).Year);
+            console.log("Ratings: " + JSON.parse(body).imdbRating);
+            console.log("Country produced in: " + JSON.parse(body).Country)
+            console.log("Rotten Tomatoes Rating: " + JSON.parse(body).tomatoRating);
+            console.log("Language: " + JSON.parse(body).Language);
+            console.log("Plot: " + JSON.parse(body).Plot);
+            console.log("Actors: " + JSON.parse(body).Actors);
 
 
-run();
+
+        }
+    });
+}
+
+
+run(argOne, argTwo);
