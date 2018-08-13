@@ -34,6 +34,7 @@ node liri.js movie-this <movie name here>
 
    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 ![Alt Text](http://g.recordit.co/3f7z3MWNts.gif)
+![Alt Text](http://g.recordit.co/zFB0MD7PnS.gif)
 
 liri.js my-tweets
 
@@ -47,7 +48,6 @@ node liri.js do-what-it-says
      * It should run `spotify-this-song` for "I Want it That Way," as follows the text in random.txt.
 ![Alt Text](http://g.recordit.co/8GCpVaqFyc.gif)
 
-   * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-![Alt Text](http://g.recordit.co/zFB0MD7PnS.gif)
+  
 
  If you want to clone your app from github and run it, you would need to supply your own `.env` file for it to work.
