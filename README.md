@@ -51,3 +51,11 @@ node liri.js do-what-it-says
   
 
  If you want to clone your app from github and run it, you would need to supply your own `.env` file for it to work.
+ 
+ <h1>Technologies Used:</h1>
+ <p>Javascript</p>
+ <p>Node js</p>
+ <p>Twitter API</p>
+ <p>OMDB API<p>
+  <p>Spotify API<p>
+  <p> npm package manger</p>
