@@ -50,7 +50,7 @@ node liri.js do-what-it-says
 
   
 
- If you want to clone your app from github and run it, you would need to supply your own `.env` file for it to work.
+ If you would like  to clone this app from github and run it, you will  need to supply your own `.env` file for it to work.
  
  <h1>Technologies Used:</h1>
  <p>Javascript</p>
